@@ -1,33 +1,45 @@
-import { dirname } from "path"
-import { fileURLToPath } from "url"
-import { FlatCompat } from "@eslint/eslintrc"
+import js from "@eslint/js"
+import tseslint from "typescript-eslint"
+import reactHooks from "eslint-plugin-react-hooks"
 import unusedImports from "eslint-plugin-unused-imports"
+import prettier from "eslint-config-prettier"
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+export default [
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
-
-const eslintConfig = [
   {
+    files: ["**/*.{ts,tsx,js,jsx}"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        JSX: "readonly",
+      },
+    },
     plugins: {
+      "react-hooks": reactHooks,
       "unused-imports": unusedImports,
     },
     rules: {
-      "unused-imports/no-unused-imports": "warn",
-      "no-console": [
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
         "warn",
         {
-          allow: ["warn", "error"],
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "unused-imports/no-unused-imports": "warn",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
     },
   },
-  ...compat.config({
-    extends: ["next/core-web-vitals", "next/typescript", "prettier"],
-  }),
-]
+  prettier,
 
-export default eslintConfig
+  {
+    ignores: [".next/**", "node_modules/**", "out/**", "build/**"],
+  },
+]
