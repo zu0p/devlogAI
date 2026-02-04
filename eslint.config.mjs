@@ -3,7 +3,6 @@ import { fileURLToPath } from "url"
 import { FlatCompat } from "@eslint/eslintrc"
 
 import unusedImports from "eslint-plugin-unused-imports"
-import storybook from "eslint-plugin-storybook"
 import reactHooks from "eslint-plugin-react-hooks"
 import tseslint from "@typescript-eslint/eslint-plugin"
 
@@ -54,8 +53,6 @@ const eslintConfig = [
   ...compat.config({
     extends: ["next/core-web-vitals", "next/typescript", "prettier"],
   }),
-
-  ...storybook.configs["flat/recommended"],
 ]
 
 export default eslintConfig
