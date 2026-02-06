@@ -1,5 +1,6 @@
 import { buildPrompt } from "@/logics/prompt"
 import { basePrompt } from "@/logics/prompt/templates/base"
+import { GeneratedArticle } from "@/services/generate.contract"
 import { NextResponse } from "next/server"
 import OpenAI from "openai"
 
@@ -20,7 +21,23 @@ export async function POST(req: Request) {
       },
     ],
   })
-  return NextResponse.json({
-    res: response,
-  })
+
+  const rawContent = response.choices[0]?.message?.content
+
+  if (!rawContent) {
+    return NextResponse.json({ message: "Empty AI response" }, { status: 500 })
+  }
+
+  let article: GeneratedArticle
+
+  try {
+    article = JSON.parse(rawContent)
+  } catch {
+    return NextResponse.json(
+      { message: "Failed to parse AI response" },
+      { status: 500 }
+    )
+  }
+
+  return NextResponse.json(article)
 }
