@@ -36,16 +36,29 @@ const GeneratePage = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <GenerateInputs value={inputs} onChange={handleChange} />
-      <GenerateActions
-        onMutation={() => generateMutation.mutateAsync(inputs)}
-      />
+    <div className="mx-auto max-w-2xl">
+      <div className="mt-8 mb-8 text-center">
+        <h2 className="mb-3 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
+          기술 블로그 글 생성기
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400">
+          주제와 키워드를 입력하면 AI가 블로그 글을 작성해드립니다
+        </p>
+      </div>
 
-      {generateMutation?.data && (
-        <GenerateResult value={articleDraft} onChange={setArticleDraft} />
-      )}
+      <div className="space-y-6">
+        <GenerateInputs value={inputs} onChange={handleChange} />
+        <GenerateActions
+          disabled={inputs.title.length > 0 ? false : true}
+          onMutation={() => generateMutation.mutateAsync(inputs)}
+        />
+
+        {generateMutation?.data && (
+          <GenerateResult value={articleDraft} onChange={setArticleDraft} />
+        )}
+      </div>
     </div>
   )
 }
+
 export default GeneratePage
