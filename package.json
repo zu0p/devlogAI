@@ -12,6 +12,8 @@
   "dependencies": {
     "@tanstack/react-query": "^5.90.20",
     "@tanstack/react-query-devtools": "^5.91.3",
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/react-editor": "^3.2.3",
     "ai": "^6.0.68",
     "axios": "^1.13.4",
     "next": "16.1.6",

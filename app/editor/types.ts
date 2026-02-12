@@ -1,8 +1,5 @@
-export interface EditorHeaderProps {
-  isPreview: boolean
-  setIsPreview: (flag: boolean) => void
-}
+import { Editor as ToastEditorType } from "@toast-ui/react-editor"
 
 export interface EditorProps {
-  isPreview: boolean
+  editorRef: React.RefObject<ToastEditorType | null>
 }

@@ -1,8 +1,16 @@
 import { useState } from "react"
+import { useGeneratedArticle } from "@/stores/generatedArticle.store"
+import { EditorProps } from "../types"
 
-const ExportActions = () => {
+const ExportActions = ({ editorRef }: EditorProps) => {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false)
+  const { setGeneratedArticle } = useGeneratedArticle()
 
+  const handleSave = () => {
+    const markdown = editorRef.current?.getInstance()?.getMarkdown()
+    setGeneratedArticle(markdown)
+    window.alert(markdown)
+  }
   const handleCopy = async () => {}
 
   const handleDownloadMd = () => {}
@@ -12,6 +20,12 @@ const ExportActions = () => {
   const handleReset = () => {}
   return (
     <div className="flex flex-wrap items-center gap-3">
+      <button
+        onClick={handleSave}
+        className="flex items-center gap-2 rounded-lg bg-amber-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+      >
+        변경사항 저장
+      </button>
       <button
         onClick={handleReset}
         className="flex items-center gap-2 rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
