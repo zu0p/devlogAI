@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useGeneratedArticle } from "@/stores/generatedArticle.store"
 import { EditorProps } from "../types"
 import { exportDocuments } from "@/lib/exportDocuments"
+import { useRouter } from "next/navigation"
 
 const ExportActions = ({ editorRef }: EditorProps) => {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false)
@@ -45,7 +46,14 @@ const ExportActions = ({ editorRef }: EditorProps) => {
     exportDocuments("html", html)
   }
 
-  const handleReset = () => {}
+  const router = useRouter()
+  const handleReset = () => {
+    if (
+      confirm("초기화하면 생성된 글이 사라집니다. 정말로 초기화하시겠습니까?")
+    ) {
+      router.push("/generate")
+    }
+  }
   return (
     <div className="flex flex-wrap items-center gap-3">
       <button
