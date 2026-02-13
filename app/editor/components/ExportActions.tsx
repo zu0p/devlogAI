@@ -1,21 +1,49 @@
 import { useState } from "react"
 import { useGeneratedArticle } from "@/stores/generatedArticle.store"
 import { EditorProps } from "../types"
+import { exportDocuments } from "@/lib/exportDocuments"
 
 const ExportActions = ({ editorRef }: EditorProps) => {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false)
-  const { setGeneratedArticle } = useGeneratedArticle()
+  const { content, setGeneratedArticle } = useGeneratedArticle()
+
+  const isSaveUpdate = () => {
+    const markdown = editorRef.current?.getInstance()?.getMarkdown()
+    return content === markdown
+  }
 
   const handleSave = () => {
     const markdown = editorRef.current?.getInstance()?.getMarkdown()
     setGeneratedArticle(markdown)
-    window.alert(markdown)
+    window.alert("저장 완료!")
   }
-  const handleCopy = async () => {}
 
-  const handleDownloadMd = () => {}
+  const handleCopy = () => {
+    if (!isSaveUpdate()) {
+      window.alert("변경사항을 먼저 저장하세요!")
+      return
+    }
+    const markdown = editorRef.current!.getInstance().getMarkdown()
+    navigator.clipboard.writeText(markdown)
+  }
 
-  const handleDownloadHtml = () => {}
+  const handleDownloadMd = () => {
+    if (!isSaveUpdate()) {
+      window.alert("변경사항을 먼저 저장하세요!")
+      return
+    }
+    const markdown = editorRef.current!.getInstance().getMarkdown()
+    exportDocuments("markdown", markdown)
+  }
+
+  const handleDownloadHtml = () => {
+    if (!isSaveUpdate()) {
+      window.alert("변경사항을 먼저 저장하세요!")
+      return
+    }
+    const html = editorRef.current!.getInstance().getHTML()
+    exportDocuments("html", html)
+  }
 
   const handleReset = () => {}
   return (
