@@ -5,8 +5,12 @@ import LoadingPage from "./loading"
 import ErrorPage from "./error"
 import EditorHeader from "./components/EditorHeader"
 import ExportActions from "./components/ExportActions"
-import ToastUIEditor from "./components/ToastUIEditor"
 import { Editor as ToastEditorType } from "@toast-ui/react-editor"
+import dynamic from "next/dynamic"
+
+const ToastUIEditor = dynamic(() => import("./components/ToastUIEditor"), {
+  ssr: false,
+})
 
 const EditorPage = () => {
   const { isLoading, error } = useGeneratedArticle()
