@@ -4,6 +4,10 @@ import "@toast-ui/editor/dist/toastui-editor.css"
 import dynamic from "next/dynamic"
 import { useGeneratedArticle } from "@/stores/generatedArticle.store"
 import { EditorProps } from "../types"
+import Prism from "prismjs"
+import "prismjs/themes/prism.css"
+import "@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css"
+import codeSyntaxHighlight from "@toast-ui/editor-plugin-code-syntax-highlight"
 
 const Editor = dynamic(
   () => import("@toast-ui/react-editor").then((mod) => mod.Editor),
@@ -20,11 +24,12 @@ const ToastUIEditor = ({ editorRef }: EditorProps) => {
         ref={editorRef}
         initialValue={content || " "}
         initialEditType="markdown"
-        previewStyle={"tab"}
+        previewStyle={"vertical"}
         hideModeSwitch={true}
         theme={""}
         usageStatistics={false}
         useCommandShortcut={true}
+        plugins={[[codeSyntaxHighlight, { highlighter: Prism }]]}
       />
     </div>
   )
