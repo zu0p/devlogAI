@@ -84,7 +84,7 @@ const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
         <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
           글 유형
         </label>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-rows-3 gap-3 md:grid-cols-3">
           {POST_TYPES.map(({ type, label }) => (
             <button
               key={type}
