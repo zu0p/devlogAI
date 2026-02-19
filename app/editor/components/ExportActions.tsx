@@ -1,17 +1,67 @@
 import { useState } from "react"
+import { useGeneratedArticle } from "@/stores/generatedArticle.store"
+import { EditorProps } from "../types"
+import { exportDocuments } from "@/lib/exportDocuments"
+import { useRouter } from "next/navigation"
 
-const ExportActions = () => {
+const ExportActions = ({ editorRef }: EditorProps) => {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false)
+  const { content, setGeneratedArticle } = useGeneratedArticle()
 
-  const handleCopy = async () => {}
+  const isSaveUpdate = () => {
+    const markdown = editorRef.current?.getInstance()?.getMarkdown()
+    return content === markdown
+  }
 
-  const handleDownloadMd = () => {}
+  const handleSave = () => {
+    const markdown = editorRef.current?.getInstance()?.getMarkdown()
+    setGeneratedArticle(markdown)
+    window.alert("저장 완료!")
+  }
 
-  const handleDownloadHtml = () => {}
+  const handleCopy = () => {
+    if (!isSaveUpdate()) {
+      window.alert("변경사항을 먼저 저장하세요!")
+      return
+    }
+    const markdown = editorRef.current!.getInstance().getMarkdown()
+    navigator.clipboard.writeText(markdown)
+  }
 
-  const handleReset = () => {}
+  const handleDownloadMd = () => {
+    if (!isSaveUpdate()) {
+      window.alert("변경사항을 먼저 저장하세요!")
+      return
+    }
+    const markdown = editorRef.current!.getInstance().getMarkdown()
+    exportDocuments("markdown", markdown)
+  }
+
+  const handleDownloadHtml = () => {
+    if (!isSaveUpdate()) {
+      window.alert("변경사항을 먼저 저장하세요!")
+      return
+    }
+    const html = editorRef.current!.getInstance().getHTML()
+    exportDocuments("html", html)
+  }
+
+  const router = useRouter()
+  const handleReset = () => {
+    if (
+      confirm("초기화하면 생성된 글이 사라집니다. 정말로 초기화하시겠습니까?")
+    ) {
+      router.push("/generate")
+    }
+  }
   return (
     <div className="flex flex-wrap items-center gap-3">
+      <button
+        onClick={handleSave}
+        className="flex items-center gap-2 rounded-lg bg-amber-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+      >
+        변경사항 저장
+      </button>
       <button
         onClick={handleReset}
         className="flex items-center gap-2 rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"

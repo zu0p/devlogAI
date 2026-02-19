@@ -1,24 +1,29 @@
 "use client"
 import { useGeneratedArticle } from "@/stores/generatedArticle.store"
-import { useState } from "react"
+import { useRef } from "react"
 import LoadingPage from "./loading"
 import ErrorPage from "./error"
 import EditorHeader from "./components/EditorHeader"
-import Editor from "./components/Editor"
 import ExportActions from "./components/ExportActions"
+import { Editor as ToastEditorType } from "@toast-ui/react-editor"
+import dynamic from "next/dynamic"
+
+const ToastUIEditor = dynamic(() => import("./components/ToastUIEditor"), {
+  ssr: false,
+})
 
 const EditorPage = () => {
   const { isLoading, error } = useGeneratedArticle()
-  const [isPreview, setIsPreview] = useState(false)
+  const editorRef = useRef<ToastEditorType>(null)
 
   if (isLoading) return <LoadingPage />
   if (error) return <ErrorPage />
 
   return (
     <div className="space-y-4">
-      <EditorHeader isPreview={isPreview} setIsPreview={setIsPreview} />
-      <Editor isPreview={isPreview} />
-      <ExportActions />
+      <EditorHeader />
+      <ToastUIEditor editorRef={editorRef} />
+      <ExportActions editorRef={editorRef} />
     </div>
   )
 }
