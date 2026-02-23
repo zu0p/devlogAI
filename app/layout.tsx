@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import ReactQueryProvider from "./providers/ReactQueryProvider"
 import "./globals.css"
+import NextThemeProvider from "./providers/NextThemeProvider"
+import Header from "./components/Header"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,12 +30,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReactQueryProvider>{children}</ReactQueryProvider>
+        <ReactQueryProvider>
+          <NextThemeProvider>
+            <Header />
+            <main className="pt-14">{children}</main>
+          </NextThemeProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   )
