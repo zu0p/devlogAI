@@ -1,10 +1,11 @@
 "use client"
 import GenerateActions from "@/app/generate/components/GenerateActions"
 import GenerateInputs from "@/app/generate/components/GenerateInputs"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { GenerateInputsState, GenerateInputsProps } from "./types"
 import { useGenerate } from "@/hooks/generate/useGenerate"
-import GenerateResult from "./components/GenerateResult"
+import { useRouter } from "next/navigation"
+import GenerateTitle from "./components/GenerateTitle"
 
 const GeneratePage = () => {
   const [inputs, setInputs] = useState<GenerateInputsState>({
@@ -12,16 +13,7 @@ const GeneratePage = () => {
     keywords: [],
     style: "tutorial",
   })
-  const [articleDraft, setArticleDraft] = useState<string>("")
-
   const generateMutation = useGenerate()
-
-  useEffect(() => {
-    if (!generateMutation.data) return
-
-    const { title, content } = generateMutation.data
-    setArticleDraft(`${title}\n\n${content}`)
-  }, [generateMutation.data])
 
   const handleChange: GenerateInputsProps["onChange"] = <
     K extends keyof GenerateInputsState,
@@ -35,17 +27,25 @@ const GeneratePage = () => {
     }))
   }
 
-  return (
-    <div className="flex flex-col">
-      <GenerateInputs value={inputs} onChange={handleChange} />
-      <GenerateActions
-        onMutation={() => generateMutation.mutateAsync(inputs)}
-      />
+  const router = useRouter()
 
-      {generateMutation?.data && (
-        <GenerateResult value={articleDraft} onChange={setArticleDraft} />
-      )}
+  const handleGenerate = () => {
+    generateMutation.mutate(inputs)
+    router.push("/editor")
+  }
+
+  return (
+    <div className="mx-auto h-full max-w-2xl">
+      <GenerateTitle />
+      <div className="m-3 space-y-6 md:m-0">
+        <GenerateInputs value={inputs} onChange={handleChange} />
+        <GenerateActions
+          disabled={!inputs.title.length || generateMutation.isPending}
+          onClick={handleGenerate}
+        />
+      </div>
     </div>
   )
 }
+
 export default GeneratePage
