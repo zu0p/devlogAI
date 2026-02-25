@@ -5,6 +5,7 @@ import Image from "next/image"
 import develop from "@/public/devlog.png"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { MoonStar, Sun } from "lucide-react"
 
 const Header = () => {
   const { setTheme, resolvedTheme } = useTheme()
@@ -25,7 +26,11 @@ const Header = () => {
           onClick={() => setTheme(isDark ? "light" : "dark")}
           className="rounded-md p-2 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
         >
-          {isDark ? "☀️" : "🌙"}
+          {isDark ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <MoonStar className="h-5 w-5" />
+          )}
         </button>
       </div>
     </header>
