@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useGeneratedArticle } from "@/stores/generatedArticle.store"
 import { EditorProps } from "../types"
-import { exportDocuments } from "@/lib/exportDocuments"
+import { clipboardCopy, exportDocuments } from "@/lib/exportDocuments"
 import { useRouter } from "next/navigation"
 import { ArrowDownToLine, Copy, FileDown, RefreshCcw } from "lucide-react"
 import { toast } from "react-toastify"
@@ -27,8 +27,7 @@ const ExportActions = ({ editorRef }: EditorProps) => {
       return
     }
     const markdown = editorRef.current!.getInstance().getMarkdown()
-    navigator.clipboard.writeText(markdown)
-    toast.success("클립보드 복사 완료")
+    clipboardCopy(markdown, "클립보드 복사 완료")
   }
 
   const handleDownloadMd = () => {
