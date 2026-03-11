@@ -31,7 +31,7 @@ const MetaData = () => {
             </span>
             <Button
               type="button"
-              size="icon"
+              size="icon-sm"
               variant="ghost"
               onClick={handleCopyMetaDescription}
             >
@@ -53,7 +53,7 @@ const MetaData = () => {
             </span>
             <Button
               type="button"
-              size="icon"
+              size="icon-sm"
               variant="ghost"
               onClick={handleCopyHashTags}
             >
@@ -64,7 +64,7 @@ const MetaData = () => {
             {hashtags.map((hashtag, index) => (
               <span
                 key={index}
-                className="inline-flex cursor-default items-center gap-1 px-2 py-1 text-sm"
+                className="inline-flex cursor-default items-center gap-1 px-2 py-1 text-sm whitespace-nowrap"
               >
                 #{hashtag}
               </span>

@@ -76,7 +76,7 @@ const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
                 <Button
                   type="button"
                   variant="ghost"
-                  size="icon"
+                  size="icon-sm"
                   onClick={() => removeKeyword(index)}
                   className="text-blue-800 transition-colors hover:bg-blue-200 dark:text-blue-200 dark:hover:bg-blue-800"
                 >
