@@ -5,4 +5,5 @@ import React from "react"
 export type ButtonProps = {
   variant?: ButtonVariant
   size?: buttonSize
+  isFull?: boolean
 } & React.ComponentProps<"button">
