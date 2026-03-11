@@ -2,6 +2,7 @@ import { GenerateInputsProps } from "../types"
 import { useState, KeyboardEvent } from "react"
 import { POST_TYPES } from "../consts"
 import { CircleX } from "lucide-react"
+import Button from "@/ds/components/atoms/button/Button"
 
 const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
   const [keywordInput, setKeywordInput] = useState("")
@@ -72,13 +73,15 @@ const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
                 className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-3 py-1 text-sm text-blue-800 dark:bg-blue-900 dark:text-blue-200"
               >
                 {keyword}
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
+                  size="icon"
                   onClick={() => removeKeyword(index)}
-                  className="rounded-full p-0.5 transition-colors hover:bg-blue-200 dark:hover:bg-blue-800"
+                  className="text-blue-800 transition-colors hover:bg-blue-200 dark:text-blue-200 dark:hover:bg-blue-800"
                 >
                   <CircleX className="h-3.75 w-3.75" />
-                </button>
+                </Button>
               </span>
             ))}
           </div>
@@ -91,18 +94,20 @@ const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
         </label>
         <div className="grid grid-rows-3 gap-3 md:grid-cols-3">
           {POST_TYPES.map(({ type, label }) => (
-            <button
+            <Button
               key={type}
               type="button"
+              size="lg"
+              variant="outline"
               onClick={() => onChange("style", type)}
-              className={`flex flex-col items-center gap-2 rounded-lg border-2 px-4 py-3 transition-all ${
+              className={`${
                 value.style === type
-                  ? "border-blue-600 bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
+                  ? "border-blue-600 bg-blue-50 text-blue-600 dark:border-blue-600 dark:bg-blue-900/20 dark:text-blue-400"
                   : "border-gray-300 bg-white text-gray-700 hover:border-gray-400 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600"
               }`}
             >
               <span className="text-sm font-medium">{label}</span>
-            </button>
+            </Button>
           ))}
         </div>
       </div>
