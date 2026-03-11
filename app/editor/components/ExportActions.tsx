@@ -5,6 +5,7 @@ import { clipboardCopy, exportDocuments } from "@/lib/exportDocuments"
 import { useRouter } from "next/navigation"
 import { ArrowDownToLine, Copy, FileDown, RefreshCcw } from "lucide-react"
 import { toast } from "react-toastify"
+import Button from "@/ds/components/atoms/button/Button"
 
 const ExportActions = ({ editorRef }: EditorProps) => {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false)
@@ -57,30 +58,27 @@ const ExportActions = ({ editorRef }: EditorProps) => {
     }
   }
   return (
-    <div className="flex flex-wrap items-center justify-items-center gap-3">
-      <button
-        onClick={handleSave}
-        className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-amber-300 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300 md:flex-none dark:text-gray-300 dark:hover:bg-gray-600"
-      >
+    <div className="grid grid-cols-4 items-center gap-3">
+      <Button variant="warning" size="sm" onClick={handleSave} isFull>
         <ArrowDownToLine className="flex h-5 w-5 text-white md:hidden" />
         <span className="hidden md:inline">변경사항 저장</span>
-      </button>
-      <button
-        onClick={handleReset}
-        className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gray-200 px-4 py-2 text-gray-700 transition-colors hover:bg-gray-300 md:flex-none dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-      >
+      </Button>
+
+      <Button variant="secondary" size="sm" onClick={handleReset} isFull>
         <RefreshCcw className="flex h-5 w-5 text-white md:hidden" />
         <span className="hidden md:inline">초기화</span>
-      </button>
+      </Button>
 
-      <div className="relative flex flex-1 items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 md:flex-none">
-        <button
+      <div className="relative">
+        <Button
+          size="sm"
           onClick={() => setShowDownloadMenu(!showDownloadMenu)}
-          className="flex w-full justify-center"
+          className="px-3"
+          isFull
         >
           <FileDown className="flex h-5 w-5 text-white md:hidden" />
           <span className="hidden md:inline">다운로드</span>
-        </button>
+        </Button>
 
         {showDownloadMenu && (
           <>
@@ -89,30 +87,33 @@ const ExportActions = ({ editorRef }: EditorProps) => {
               onClick={() => setShowDownloadMenu(false)}
             />
             <div className="absolute left-0 z-20 mt-2 w-40 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-800">
-              <button
+              <Button
+                variant="ghost"
+                size="lg"
+                isFull
+                className="rounded-none"
                 onClick={handleDownloadMd}
-                className="w-full px-4 py-2 text-left text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
               >
                 .md 파일
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                isFull
+                className="rounded-none"
                 onClick={handleDownloadHtml}
-                className="w-full px-4 py-2 text-left text-gray-700 transition-colors hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
               >
                 .html 파일
-              </button>
+              </Button>
             </div>
           </>
         )}
       </div>
 
-      <button
-        onClick={handleCopy}
-        className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2 text-white transition-colors hover:bg-green-700 md:flex-none"
-      >
+      <Button variant="success" size="sm" onClick={handleCopy} isFull>
         <Copy className="flex h-5 w-5 text-white md:hidden" />
         <span className="hidden md:inline">복사</span>
-      </button>
+      </Button>
     </div>
   )
 }
