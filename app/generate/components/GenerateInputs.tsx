@@ -3,6 +3,7 @@ import { useState, KeyboardEvent } from "react"
 import { POST_TYPES } from "../consts"
 import { CircleX } from "lucide-react"
 import Button from "@/ds/components/atoms/button/Button"
+import LabeledInput from "@/ds/components/molecules/labeled-input/LabeledInput"
 
 const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
   const [keywordInput, setKeywordInput] = useState("")
@@ -30,39 +31,25 @@ const GenerateInputs = ({ value, onChange }: GenerateInputsProps) => {
 
   return (
     <>
-      <div>
-        <label
-          htmlFor="topic"
-          className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          주제
-        </label>
-        <input
-          id="topic"
-          type="text"
-          value={value.title}
-          onChange={(e) => onChange("title", e.target.value)}
-          placeholder="예: React의 useEffect 훅 완벽 가이드"
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500"
-          required
-        />
-      </div>
+      <LabeledInput
+        label="주제"
+        inputId="topic"
+        type="text"
+        value={value.title}
+        onChange={(e) => onChange("title", e.target.value)}
+        placeholder="예: React의 useEffect 훅 완벽 가이드"
+        required
+      />
 
       <div>
-        <label
-          htmlFor="keywords"
-          className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
-        >
-          키워드 (Enter로 추가)
-        </label>
-        <input
-          id="keywords"
+        <LabeledInput
+          label="키워드 (Enter로 추가)"
+          inputId="keywords"
           type="text"
           value={keywordInput}
           onChange={(e) => setKeywordInput(e.target.value)}
           onKeyDown={handleKeywordKeyDown}
           placeholder="예: React, Hooks, useEffect"
-          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 transition-colors focus:border-transparent focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500"
         />
 
         {value.keywords.length > 0 && (
