@@ -1,6 +1,6 @@
 "use client"
 
-import Header from "@/ds/components/molecules/Header"
+import Header from "@/ds/components/molecules/header/Header"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import develop from "@/public/devlog.png"
