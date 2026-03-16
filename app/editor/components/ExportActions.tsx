@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation"
 import { ArrowDownToLine, Copy, FileDown, RefreshCcw } from "lucide-react"
 import { useToast } from "@/stores/toast.store"
 import Button from "@/ds/components/atoms/button/Button"
+import { useDialog } from "@/stores/dialog.store"
 
 const ExportActions = ({ editorRef }: EditorProps) => {
   const [showDownloadMenu, setShowDownloadMenu] = useState(false)
   const { content, setGeneratedArticle } = useGeneratedArticle()
   const { showToast } = useToast()
+  const { showDialog } = useDialog()
 
   const isSaveUpdate = () => {
     const markdown = editorRef.current?.getInstance()?.getMarkdown()
@@ -60,11 +62,23 @@ const ExportActions = ({ editorRef }: EditorProps) => {
 
   const router = useRouter()
   const handleReset = () => {
-    if (
-      confirm("초기화하면 생성된 글이 사라집니다. 정말로 초기화하시겠습니까?")
-    ) {
-      router.push("/generate")
-    }
+    showDialog({
+      message: `초기화하면 생성된 글이 사라집니다. 
+      정말로 초기화하시겠습니까?`,
+      variant: "default",
+      buttons: [
+        {
+          text: "네",
+          onClick: () => {
+            router.push("/generate")
+          },
+        },
+        {
+          text: "아니요",
+          onClick: () => {},
+        },
+      ],
+    })
   }
   return (
     <div className="grid grid-cols-4 items-center gap-3">
