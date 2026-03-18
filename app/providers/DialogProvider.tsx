@@ -22,6 +22,7 @@ const DialogProvider = () => {
             <div
               key={dialog.id}
               className="fixed inset-0 z-100"
+              id="dialog-backdrop"
               onClick={() => dismissDialog(dialog.id)}
             >
               <div onClick={(e) => e.stopPropagation()}></div>
