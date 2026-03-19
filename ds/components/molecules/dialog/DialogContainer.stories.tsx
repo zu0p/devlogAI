@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import { expect, userEvent, within } from "@storybook/test"
-import DialogProvider from "../../app/providers/DialogProvider"
+import DialogContainer from "./DialogContainer"
 import { useDialog } from "@/stores/dialog.store"
 import Button from "@/ds/components/atoms/button/Button"
 
 const meta = {
   title: "Providers/DialogProvider",
-  component: DialogProvider,
+  component: DialogContainer,
   parameters: {
     layout: "fullscreen",
     a11y: {
@@ -38,7 +38,7 @@ const meta = {
       )
     },
   ],
-} satisfies Meta<typeof DialogProvider>
+} satisfies Meta<typeof DialogContainer>
 
 export default meta
 type Story = StoryObj<typeof meta>
