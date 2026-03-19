@@ -4,8 +4,8 @@ import ReactQueryProvider from "./providers/ReactQueryProvider"
 import "./globals.css"
 import NextThemeProvider from "./providers/NextThemeProvider"
 import MainHeader from "./components/MainHeader"
-import ToastProvider from "./providers/ToastProvider"
 import DialogContainer from "@/ds/components/molecules/dialog/DialogContainer"
+import ToastContainer from "@/ds/components/molecules/toast/ToastContainer"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -39,7 +39,7 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <NextThemeProvider>
-            <ToastProvider />
+            <ToastContainer />
             <DialogContainer />
             <MainHeader />
             <main className="pt-14">{children}</main>

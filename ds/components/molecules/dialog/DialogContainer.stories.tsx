@@ -5,7 +5,7 @@ import { useDialog } from "@/stores/dialog.store"
 import Button from "@/ds/components/atoms/button/Button"
 
 const meta = {
-  title: "Providers/DialogProvider",
+  title: "Library/Molecules/DialogContainer",
   component: DialogContainer,
   parameters: {
     layout: "fullscreen",
