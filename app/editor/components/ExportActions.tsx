@@ -65,16 +65,18 @@ const ExportActions = ({ editorRef }: EditorProps) => {
     showDialog({
       message: `초기화하면 생성된 글이 사라집니다. 
       정말로 초기화하시겠습니까?`,
-      variant: "default",
+      variant: "destructive",
       buttons: [
         {
           text: "네",
+          variant: "ghost",
           onClick: () => {
             router.push("/generate")
           },
         },
         {
           text: "아니요",
+          variant: "ghost",
           onClick: () => {},
         },
       ],
