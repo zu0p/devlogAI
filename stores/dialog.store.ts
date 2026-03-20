@@ -1,13 +1,19 @@
-import { DialogProps } from "@/ds/components/molecules/dialog/Dialog.types"
+import {
+  DialogButton,
+  DialogProps,
+} from "@/ds/components/molecules/dialog/Dialog.types"
 import { create } from "zustand"
 
 export interface Dialog extends Partial<DialogProps> {
   id: number
+  title?: string
+  message: string
+  buttons?: DialogButton[]
 }
 
 interface DialogState {
   dialogs: Dialog[]
-  showDialog: (dialog: Partial<DialogProps>) => void
+  showDialog: (dialog: Omit<Dialog, "id">) => void
   dismissDialog: (id: number) => void
 }
 

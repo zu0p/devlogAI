@@ -10,30 +10,27 @@ const DialogContainer = () => {
     <div>
       {dialogs
         .filter((dialog) => dialog.message)
-        .map((dialog) => {
-          const buttonsWithDismiss = dialog.buttons?.map((button) => ({
-            ...button,
-            onClick: () => {
-              button.onClick?.()
-              dismissDialog(dialog.id)
-            },
-          }))
-          return (
-            <div
-              key={dialog.id}
-              className="fixed inset-0 z-100"
-              id="dialog-backdrop"
-              onClick={() => dismissDialog(dialog.id)}
-            >
-              <div onClick={(e) => e.stopPropagation()}></div>
-              <Dialog
-                message={dialog.message!}
-                variant={dialog.variant!}
-                buttons={buttonsWithDismiss}
+        .map((dialog) => (
+          <Dialog
+            key={dialog.id}
+            variant={dialog.variant!}
+            onClose={() => dismissDialog(dialog.id)}
+          >
+            {dialog.title && <Dialog.Title>{dialog.title}</Dialog.Title>}
+            <Dialog.Label>{dialog.message}</Dialog.Label>
+            {dialog.buttons && (
+              <Dialog.Button
+                buttons={dialog.buttons.map((button) => ({
+                  ...button,
+                  onClick: () => {
+                    button.onClick()
+                    dismissDialog(dialog.id)
+                  },
+                }))}
               />
-            </div>
-          )
-        })}
+            )}
+          </Dialog>
+        ))}
     </div>
   )
 }
